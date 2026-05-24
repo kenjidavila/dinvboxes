@@ -3,12 +3,24 @@
 import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
+import dynamic from "next/dynamic"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, Calendar } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import WorldMapButton from "@/components/world-map-button"
 import IOSCalendar from "@/components/ios-calendar"
+import HeroInvoiceCard from "@/components/hero-invoice-card"
+
+const HeroInvoiceCard3D = dynamic(
+  () => import("@/components/hero-invoice-card-3d"),
+  {
+    ssr: false,
+    loading: () => (
+      <HeroInvoiceCard className="absolute top-0 left-0 w-[85%] h-[80%]" />
+    ),
+  },
+)
 
 export default function Home() {
   const [calendarOpen, setCalendarOpen] = useState(false)
@@ -91,70 +103,8 @@ export default function Home() {
               style={{ aspectRatio: '1 / 1.05' }}
               aria-hidden="true"
             >
-              {/* Main Card */}
-              <div 
-                className="absolute top-0 left-0 w-[85%] h-[80%] rounded-2xl p-7"
-                style={{ 
-                  background: 'var(--navy)', 
-                  color: 'var(--cream)',
-                  boxShadow: '0 30px 80px -20px rgba(0,43,73,0.35)'
-                }}
-              >
-                <div className="font-mono text-xs uppercase tracking-widest mb-1.5" style={{ color: 'var(--white-60)' }}>
-                  Factura 2026-0087
-                </div>
-                <div className="text-xl font-bold mb-5" style={{ color: 'var(--cream)' }}>
-                  Diseño web - Junio
-                </div>
-                
-                <div className="flex justify-between py-3 text-sm" style={{ borderBottom: '1px solid var(--white-12)' }}>
-                  <span style={{ color: 'var(--white-60)' }}>Cliente</span>
-                  <span className="font-semibold">Estudio Marín S.L.</span>
-                </div>
-                <div className="flex justify-between py-3 text-sm" style={{ borderBottom: '1px solid var(--white-12)' }}>
-                  <span style={{ color: 'var(--white-60)' }}>NIF</span>
-                  <span className="font-semibold">B-87452910</span>
-                </div>
-                <div className="flex justify-between py-3 text-sm" style={{ borderBottom: '1px solid var(--white-12)' }}>
-                  <span style={{ color: 'var(--white-60)' }}>Envío VERI*FACTU</span>
-                  <span 
-                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold font-mono"
-                    style={{ background: 'rgba(255,144,21,0.15)', color: 'var(--orange)' }}
-                  >
-                    <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--orange)' }}></span>
-                    Enviado
-                  </span>
-                </div>
-                <div className="flex justify-between py-3 text-sm">
-                  <span style={{ color: 'var(--white-60)' }}>Formato</span>
-                  <span className="font-semibold">Facturae 3.2.2</span>
-                </div>
-                
-                <div className="flex justify-between items-baseline mt-5 pt-4" style={{ borderTop: '1px dashed var(--white-12)' }}>
-                  <span className="font-mono text-xs uppercase tracking-widest" style={{ color: 'var(--white-60)' }}>Total con IVA</span>
-                  <span className="text-3xl font-extrabold" style={{ letterSpacing: '-0.02em' }}>1.815,00 EUR</span>
-                </div>
-                
-                {/* QR and Hash Footer */}
-                <div className="flex justify-between items-end mt-4 pt-3" style={{ borderTop: '1px solid var(--white-12)' }}>
-                  {/* QR Code */}
-                  <div className="w-10 h-10 rounded overflow-hidden flex-shrink-0">
-                    <img 
-                      src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/qr_dinvbox-5-WlMXUKUkrrRSwlMUubkeP48ZjSjX4N.png" 
-                      alt="QR VERI*FACTU" 
-                      className="w-full h-full object-contain"
-                    />
-                  </div>
-                  
-                  {/* SHA-256 Hash */}
-                  <div className="w-10 h-10 flex-shrink-0 p-1 rounded" style={{ background: 'var(--white-12)' }}>
-                    <div className="w-full h-full font-mono text-[5px] leading-[1.15] break-all flex items-center justify-center text-center" style={{ color: 'var(--white-60)' }}>
-                      a7f3<br/>b2c1<br/>d4e5<br/>f608
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
+              <HeroInvoiceCard3D />
+
               {/* Alert Card */}
               <div 
                 className="absolute bottom-0 right-0 w-[65%] rounded-2xl p-5"
